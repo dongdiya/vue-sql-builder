@@ -36,8 +36,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.list)
-      this.$children
   },
   data() {
     return {

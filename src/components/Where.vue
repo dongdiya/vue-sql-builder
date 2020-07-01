@@ -22,6 +22,16 @@
         }],
       }
     },
+    watch: {
+      list: {
+        deep: false,
+        handler: function (val) {
+          //todo 执行SQL
+          console.log('总列表变化',val)
+          this.buildSQL();
+        }
+      }
+    },
     methods: {
       addRow() {
         return {

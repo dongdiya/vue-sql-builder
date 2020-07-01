@@ -40,7 +40,7 @@ function whereRowSql(obj) {
 
 export function whereSql(list) {
     let temp = 'WHERE\n  ';
-    return temp += list.map(item => {
+    return temp += list.filter(item => item.field && item.operator && item.value).map(item => {
         return whereRowSql(item);
-    }).join('\nAND  ')
+    }).join('\n  AND  ')
 }
