@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <!--    由下拉框组成，首项选择一个表，其余列表项都是join表-->
+  <div class="sql-form-group">
     <el-select v-model="row.field" placeholder="选择组字段">
+      <el-option
+              label="*"
+              value="*"></el-option>
       <el-option-group
-              v-for="group in fieldsForSelect"
+              v-for="group in optionForAll"
               :key="group.alias"
               :value="group.name"
               :label="group.name + '(' + group.alias + ')'">
+        <el-option
+                :label="group.alias + '.*'"
+                :value="group.alias + '.*'"></el-option>
         <el-option
                 v-for="item in group.fields"
                 :key="item.name"
@@ -33,7 +38,8 @@
         'fieldsForTable',
         'fieldsForNotTable',
         'fieldsForOptions',
-        'fieldsForSelect'
+        'fieldsForSelect',
+        'optionForAll'
       ])
     },
     created() {
@@ -43,7 +49,9 @@
         deep: true,
         immediate: true,
         handler: function (val) {
-          this.$emit('buildSQL');
+          if (val.field) {
+            this.$emit('buildSQL');
+          }
         }
       }
     },

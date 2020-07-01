@@ -1,23 +1,19 @@
 <template>
-      <div class="sql-table">
-          <!--    由下拉框组成，首项选择一个表，其余列表项都是join表-->
-          <div v-for="(item, index) in list" :key="item.__ob__.dep.id">
-              <el-button circle>拖</el-button>
-              <el-button @click="list.splice(index+1, 0, addRow())" type="primary" icon="el-icon-plus" circle></el-button>
-              <el-button v-if="list.length > 1" @click="list.splice(index, 1)" type="danger" icon="el-icon-delete" circle></el-button>
-              <FromRow :first="index === 0" :row="item" :index="index" @buildSQL="buildSQL"></FromRow>
-          </div>
-      </div>
+    <Draggable :list="list" :addRow="addRow" @change="list=$event">
+        <template v-slot="{item, index}">
+            <FromRow :first="index === 0" :row="item" :index="index" @buildSQL="buildSQL"></FromRow>
+        </template>
+    </Draggable>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import FromRow from "./FromRow";
-// import Draggable from "./Draggable";
+import Draggable from "./Draggable";
 
 export default {
   name: 'HelloWorld',
-  components: {FromRow},
+  components: {FromRow, Draggable},
   props: {
     msg: String
   },
@@ -35,7 +31,7 @@ export default {
         handler: function (val) {
             //todo 执行SQL
             console.log('总列表变化',val)
-            this.$store.commit('buildSQL', {type: 'FROM', list: val})
+            this.$store.dispatch('buildSQL', {type: 'FROM', list: val})
         }
     }
   },
@@ -52,13 +48,6 @@ export default {
       }],
       tableName: '',
       value: '',
-        row: {
-            joinType: '',
-            tableName: '',
-            alias: this.$store.getters.getAlias(),//调用一次更新一次，慎用
-            left: '',
-            right: ''
-        },
     }
   },
   methods: {
@@ -74,7 +63,7 @@ export default {
           }
       },
       buildSQL() {
-          this.$store.commit('buildSQL', {type: 'FROM', list: this.list})
+          this.$store.dispatch('buildSQL', {type: 'FROM', list: this.list})
       },
   }
 }

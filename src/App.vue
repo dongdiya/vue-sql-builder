@@ -1,35 +1,12 @@
 <template>
   <div id="app">
-    <el-row>
-      <el-col :span="4">from</el-col>
-      <el-col :span="20">
-        <From/>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="4">select</el-col>
-      <el-col :span="20">
-        <Select/>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="4">where</el-col>
-      <el-col :span="20">
-        <Where/>
-      </el-col>
-    </el-row>
-    <el-row>
-      <SQL></SQL>
-    </el-row>
+    <QueryBuilder :list="tables"></QueryBuilder>
   </div>
 </template>
 
 <script>
-import From from './components/From.vue'
-import Select from './components/Select'
-import Where from "./components/Where";
-import Query from './classes/query'
-import SQL from './components/SQLConsole'
+// import QueryBuilder from './components/QueryBuilder.vue'
+
 let tables = [
   {
     "name": "addresses",
@@ -301,16 +278,23 @@ let tables = [
 export default {
   name: 'app',
   components: {
-    From, SQL, Select, Where
+    // QueryBuilder
   },
   data() {
     return {
-      tables: [],
-      query: Query.build({tables})
+      tables: tables,
     }
   },
   created() {
-    this.$store.commit('init', tables)
+    fetch('/data.json')
+            .then(function(response) {
+              return response.json();
+            })
+            .then((res) => {
+              console.log('response',tables)
+              console.log('response',res)
+              this.tables = res
+            });
   }
 }
 </script>

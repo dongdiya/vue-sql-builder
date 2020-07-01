@@ -13,17 +13,19 @@ function fromRowSql(obj, index) {
     }
     return `"${obj.tableName}" AS "${obj.alias}"`;
 }
+
 export function fromSql(list) {
-    let temp = 'FROM\n ';
+    let temp = 'FROM\n  ';
     temp += list.filter(item => item.tableName).map((item, index) => {
         return fromRowSql(item, index);
-    }).join('\n ');
+    }).join('\n  ');
     return temp;
 }
 //较容易
 function selectRowSql(obj) {
     console.log(obj)
-    return obj.alias == '0' ? '*' : `"${obj.field.split('.')[0]}"."${obj.field.split('.')[1]}"`;
+    return obj.field == '*' ? '*'
+        : `"${obj.field.split('.')[0]}".${obj.field.split('.')[1] == '*' ? '*' : `"${obj.field.split('.')[1]}"`}`;
 }
 export function selectSql(list) {
     let temp = '\nSELECT\n  ';
@@ -33,12 +35,12 @@ export function selectSql(list) {
 }
 //较容易
 function whereRowSql(obj) {
-    return `"${obj.fields.split('.')[0]}"."${obj.fields.split('.')[1]}" ${obj.operator} '${obj.value}'`
+    return `"${obj.field.split('.')[0]}"."${obj.field.split('.')[1]}" ${obj.operator} '${obj.value}'`
 }
 
 export function whereSql(list) {
-    let temp = 'WHERE\n';
+    let temp = 'WHERE\n  ';
     return temp += list.map(item => {
         return whereRowSql(item);
-    }).join('\nAND ')
+    }).join('\nAND  ')
 }

@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <!--    由下拉框组成，首项选择一个表，其余列表项都是join表-->
+  <div class="sql-form-group">
     <el-select v-model="row.field" placeholder="选择组字段">
       <el-option-group
-              v-for="group in fieldsForOptions"
+              v-for="group in optionForAll"
               :key="group.alias"
               :value="group.name"
               :label="group.name + '(' + group.alias + ')'">
@@ -44,25 +43,16 @@
         'fieldsForTable',
         'fieldsForNotTable',
         'fieldsForOptions',
-        'fieldsForSelect'
+        'optionForAll'
       ])
-    },
-    created() {
     },
     watch: {
       row: {
         deep: true,
-        immediate: true,
         handler: function (val) {
-          this.$emit('buildSQL');
-        }
-      }
-    },
-    methods: {
-      addRow() {
-        return {
-          left: '',
-          right: ''
+            if (val.field && val.operator && val.value) {
+                this.$emit('buildSQL');
+            }
         }
       }
     }
@@ -71,14 +61,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  h3 {
-    margin: 40px 0 0;
-  }
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  a {
-    color: #42b983;
-  }
+
 </style>

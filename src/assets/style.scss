@@ -1,0 +1,17 @@
+.vue-query-builder {
+    font-size: 16px;
+    .button-group {
+        text-align: left;
+        flex: 0 auto;
+    }
+    .button-group .el-button+.el-button {
+        margin-left: 5px;
+    }
+    .sql-form-group {
+        display: flex;
+    }
+    .sql-form-group div{
+        flex: 1 0 auto;
+        margin-right: 5px;
+    }
+}

@@ -1,88 +1,104 @@
 <template>
-  <div class="sql-table">
-<!--    由下拉框组成，首项选择一个表，其余列表项都是join表-->
-    <div v-for="(item, index) in list" :key="item.__ob__.dep.id">
-        <el-button circle>拖动</el-button>
-        <el-button @click="list.splice(index+1, 0, addRow())" type="primary" icon="el-icon-plus" circle></el-button>
-        <el-button v-if="list.length > 1" @click="list.splice(index, 1)" type="danger" icon="el-icon-delete" circle></el-button>
-        <slot :item="{item, index}"></slot>
+    <div class="sql-table">
+        <draggable v-model="inlist"
+                   handle=".handle"
+                   @change="(()=>{})" :move="checkMove">
+            <transition-group>
+                <div class="sql-rows" v-for="(item, index) in inlist" :key="item.__ob__.dep.id">
+                    <div class="button-group" style="width: 115px;">
+                        <el-button class="handle" icon="el-icon-sort" circle></el-button>
+                        <el-button @click="inlist.splice(index+1, 0, addRow())" type="primary" icon="el-icon-plus"
+                                   circle></el-button>
+                        <el-button v-if="inlist.length > 1" @click="inlist.splice(index, 1)" type="danger" icon="el-icon-delete"
+                                   circle></el-button>
+                    </div>
+                    <slot :item="item" :index="index"></slot>
+                </div>
+            </transition-group>
+        </draggable>
     </div>
-  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-// import FromRow from "./FromRow";
-// import SelectRow from "./SelectRow";
+    import draggable from 'vuedraggable';
 
-export default {
-  name: 'HelloWorld',
-  components: {},
-  props: {
-    list: Array
-  },
-  computed: {
-    // 使用对象展开运算符将 getter 混入 computed 对象中
-    ...mapGetters([
-      'tableNames',
-      'fieldsForTable',
-      'fieldsForNotTable',
-    ])
-  },
-  watch: {
-    // list: {
-    //     deep: false,
-    //     handler: function (val) {
-    //         //todo 执行SQL
-    //         console.log('总列表变化',val)
-    //         this.$store.commit('buildSQL', {type: 'FROM', list: val})
-    //     }
-    // }
-  },
-  mounted() {
-  },
-  data() {
-    return {
+    export default {
+        props: {
+            list: Array,
+            addRow: Function
+        },
+        computed: {
+            inlist: {
+                get() {
+                    return this.list
+                },
+                set(val) {
+                  this.$emit('change', val);
+                }
+            }
+        },
+        components: {
+            draggable
+        },
+        methods: {
+            checkMove(evt) {
+                return !('alias' in evt.draggedContext.element) ||
+                    (evt.draggedContext.index !== 0 && evt.draggedContext.futureIndex !== 0)
+            }
+        }
     }
-  },
-  methods: {
-      addRow() {
-          return {
-              joinType: '',
-              tableName: '',
-              alias: this.$store.getters.getAlias(),//调用一次更新一次，慎用
-              onList: [{
-                  left: '',
-                  right: ''
-              }]
-          }
-      },
-      buildSQL() {
-          this.$store.commit('buildSQL', {type: 'FROM', list: this.list})
-      },
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style lang="scss">
     .sql-table {
         display: flex;
         flex-direction: column;
         line-height: 40px;
-        div {
+
+        .sql-rows {
             display: flex;
             align-items: flex-start;
         }
+
+        .el-button {
+            display: inline-block;
+            line-height: 1;
+            white-space: nowrap;
+            cursor: pointer;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            border-color: #dcdfe6;
+            color: #606266;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+            margin: 0;
+            transition: .1s;
+            font-weight: 500;
+        }
+
+        .el-button.is-circle {
+            border-radius: 50%;
+            padding: 9px;
+        }
+
+        .el-button--primary {
+            color: #fff;
+            background-color: #409eff;
+            border-color: #409eff;
+        }
+
+        .el-button--danger {
+            color: #FFF;
+            background-color: #F56C6C;
+            border-color: #F56C6C;
+        }
+
+        .el-input .el-input__inner {
+            height: 32px;
+            line-height: 32px;
+        }
     }
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-a {
-  color: #42b983;
-}
 </style>

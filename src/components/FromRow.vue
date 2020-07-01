@@ -1,6 +1,5 @@
 <template>
-  <div>
-<!--    由下拉框组成，首项选择一个表，其余列表项都是join表-->
+  <div class="sql-form-group">
     <el-select v-if="!first" v-model="row.joinType" placeholder="请选择">
       <el-option label="inner join" value="inner join"></el-option>
       <el-option label="left join" value="left join"></el-option>
@@ -24,16 +23,16 @@
               <span v-if="index > 0">AND</span>
               <el-select v-model="item0.left" placeholder="选择字段">
                   <el-option
-                          v-for="item in fieldsForTable(row.tableName)"
+                          v-for="item in fieldsForTable"
                           :key="item.name"
                           :label="row.alias + '.' + item.name"
                           :value="row.alias + '.' + item.name">
                   </el-option>
               </el-select>
               =
-              <el-select v-model="item0.right" placeholder="选择组字段">
+              <el-select v-model="item0.right" placeholder="选择字段">
                   <el-option-group
-                          v-for="group in fieldsForOptions"
+                          v-for="group in fieldsForNotTable"
                           :key="group.alias"
                           :value="group.name"
                           :label="group.name + '(' + group.alias + ')'">
@@ -64,34 +63,36 @@ export default {
         row: Object
     },
     computed: {
-    ...mapGetters([
-        'tableNames',
-        'fieldsForTable',
-        'fieldsForNotTable',
-        'fieldsForOptions'
-    ])
-    },
-    created() {
+        fieldsForTable() {
+            let res = this.$store.state[this.$SqlBuilderNamespace].tables.find(item => item.name == this.row.tableName);
+            return res ? res.fields : [];
+        },
+        fieldsForNotTable() {
+            return this.optionForAll.filter(item => {
+                return item.name != this.row.tableName
+            });
+        },
+        ...mapGetters([
+            'tableNames',
+            'optionForAll'
+        ])
     },
     watch: {
         row: {
             deep: true,
-            immediate: true,
             handler: function (val) {
               if (this.first && val.tableName ||
                   (!this.first && val.joinType && val.tableName)) {
-                  console.log('emit',val)
                     this.$emit('buildSQL');
               }
-
             }
         }
     },
     methods: {
         addRow() {
             return {
-                    left: '',
-                    right: ''
+                left: '',
+                right: ''
             }
         }
     }
@@ -100,14 +101,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-a {
-  color: #42b983;
-}
 </style>

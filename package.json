@@ -1,9 +1,12 @@
 {
-  "name": "vue-query-builder",
+  "name": "vue-sql-builder",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "main": "dist/vueQueryBuilder.common.js",
+  "author": "dongdiya <dongdiya007@163.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
+    "lib": "vue-cli-service build --target lib --name vueQueryBuilder src/plugins/current.js",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
@@ -13,6 +16,7 @@
     "element-ui": "^2.4.5",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
+    "vuedraggable": "^2.23.2",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

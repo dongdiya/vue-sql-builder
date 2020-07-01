@@ -1,22 +1,19 @@
 <template>
-  <div class="sql-table">
-    <!--    由下拉框组成，首项选择一个表，其余列表项都是join表-->
-    <div v-for="(item, index) in list" :key="item.__ob__.dep.id">
-      <el-button circle>拖</el-button>
-      <el-button @click="list.splice(index+1, 0, addRow())" type="primary" icon="el-icon-plus" circle></el-button>
-      <el-button v-if="list.length > 1" @click="list.splice(index, 1)" type="danger" icon="el-icon-delete" circle></el-button>
+  <Draggable :list="list" :addRow="addRow" @change="list=$event">
+    <template v-slot="{item, index}">
       <SelectRow :row="item" :index="index" @buildSQL="buildSQL"></SelectRow>
-    </div>
-  </div>
+    </template>
+  </Draggable>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
   import SelectRow from "./SelectRow";
+  import Draggable from "./Draggable";
 
   export default {
     name: 'HelloWorld',
-    components: {SelectRow},
+    components: {SelectRow, Draggable},
     props: {
       msg: String
     },
@@ -47,15 +44,6 @@
         list: [{
           field: ''
         }],
-        tableName: '',
-        value: '',
-        row: {
-          joinType: '',
-          tableName: '',
-          alias: this.$store.getters.getAlias(),//调用一次更新一次，慎用
-          left: '',
-          right: ''
-        },
       }
     },
     methods: {
@@ -65,7 +53,7 @@
         }
       },
       buildSQL() {
-        this.$store.commit('buildSQL', {type: 'SELECT', list: this.list})
+        this.$store.dispatch('buildSQL', {type: 'SELECT', list: this.list})
       },
     }
   }

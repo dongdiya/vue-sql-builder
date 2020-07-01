@@ -1,8 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
-import store from './store'
 import './plugins/element.js'
+import QueryBuilder from './plugins/current'
+// import QueryBuilder from '../dist/vueQueryBuilder.common'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+const store = new Vuex.Store({})
+Vue.use(QueryBuilder, {store});
 
 Vue.config.productionTip = false
 
