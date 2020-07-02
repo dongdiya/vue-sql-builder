@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "private": false,
   "main": "dist/vueQueryBuilder.common.js",
+  "keywords": ["vue","sql","query"],
   "author": "dongdiya <dongdiya007@163.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
