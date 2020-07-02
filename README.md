@@ -1,5 +1,7 @@
 # vue-sql-builder
 
+
+
 ## 安装
 ```
 npm install vue-sql-builder
@@ -21,176 +23,20 @@ Vue.use(sqlbuilder,{store: yourvuexinstance[, namespace: 'sqlNamespace']})
 <QueryBuilder :list="tables"></QueryBuilder>
 ```
 
-### tables信息应至少为一下格式：
+### tables信息应至少为以下结构：
 ```
-tables: [
-          {
-            "name": "addresses",
+tables: [{
+            "name": "表名",
             "fields": [{
-              "name": "postalCode"            
-    }, {
-              "name": "createdAt",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "updatedAt",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "countryCode",
-              "type": "character varying(255)",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }, {
-              "name": "apartmentNo",
-              "type": "character varying(255)",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }, {
-              "name": "id",
-              "type": "integer",
-              "default": "nextval('addresses_id_seq'::regclass)",
-              "constraint": "PRIMARY KEY",
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "city",
-              "type": "character varying(255)",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }, {
-              "name": "streetAddress",
-              "type": "character varying(255)",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }, {
-              "name": "state",
-              "type": "character varying(255)",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }]
-          }, {
-            "name": "timeoffs",
-            "fields": [{
-              "name": "startDate",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }, {
-              "name": "updatedAt",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "id",
-              "type": "integer",
-              "default": "nextval('timeoffs_id_seq'::regclass)",
-              "constraint": "PRIMARY KEY",
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "createdAt",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "endDate",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }]
-          }, {
-            "name": "roleHistories",
-            "fields": [{
-              "name": "updatedAt",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "startDate",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }, {
-              "name": "endDate",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }, {
-              "name": "id",
-              "type": "integer",
-              "default": "nextval('\"roleHistories_id_seq\"'::regclass)",
-              "constraint": "PRIMARY KEY",
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "createdAt",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": false
-            }]
-          }, {
-            "name": "departments",
-            "fields": [{
-              "name": "name",
-              "type": "character varying(255)",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }, {
-              "name": "updatedAt",
-              "type": "timestamp with time zone",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": false
-            }, {
-              "name": "createdAt"
-            }, {
-              "name": "id"
-            }, {
-              "name": "description",
-              "type": "text",
-              "default": null,
-              "constraint": null,
-              "fkTargetTables": [],
-              "nullable": true
-            }]
-          }],
+                              "name": "字段名"            
+                        }, 
+                         ...
+                        {
+                              "name": "field1"
+                        }]
+          }, ...
+         ]
 ```
 
-### 联系方式
+### 联系
 dongdiya007@163.com
