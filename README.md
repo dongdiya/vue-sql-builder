@@ -1,6 +1,6 @@
 ## vue-sql-builder
 
-![image](https://github.com/dongdiya/vue-sql-builder/blob/master/demo.mov.gif)
+origin from [sequelease](https://github.com/genius-gemini/sequelease)
 
 ### 安装
 ```
