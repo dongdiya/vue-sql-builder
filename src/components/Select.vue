@@ -36,8 +36,6 @@
       }
     },
     mounted() {
-      console.log(this.list)
-      this.$children
     },
     data() {
       return {
