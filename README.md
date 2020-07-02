@@ -1,8 +1,8 @@
-# vue-sql-builder
+## vue-sql-builder
 
-![image](https://github.com/dongdiya/vue-sql-builder/demo.mov.gif)
+origin from [sequelease](https://github.com/genius-gemini/sequelease)
 
-## 安装
+### 安装
 ```
 npm install vue-sql-builder
 ```
@@ -38,5 +38,6 @@ tables: [{
          ]
 ```
 
-### 联系
+### 备注
+待完成：生成SQL语句方法、复制、清除等功能；
 dongdiya007@163.com
