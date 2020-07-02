@@ -1,6 +1,6 @@
 # vue-sql-builder
 
-
+![image](https://github.com/dongdiya/vue-sql-builder/demo.mov.gif)
 
 ## 安装
 ```
