@@ -2,6 +2,8 @@
 
 origin from [sequelease](https://github.com/genius-gemini/sequelease)
 
+![image](https://github.com/dongdiya/vue-sql-builder/blob/master/WX20200702-112053%402x.png)
+
 ### 安装
 ```
 npm install vue-sql-builder
